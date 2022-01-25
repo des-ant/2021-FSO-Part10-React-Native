@@ -4,7 +4,7 @@ import Text from './Text';
 
 const styles = StyleSheet.create({
   link: {
-    margin: 5,
+    padding: 5,
   },
 });
 
