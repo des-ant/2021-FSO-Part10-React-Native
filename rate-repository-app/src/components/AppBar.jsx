@@ -9,14 +9,17 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.textPrimary,
     paddingBottom: 20,
     paddingHorizontal: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
-  // ...
 });
 
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      <AppBarTab tabName={'Repositories'} />
+      <AppBarTab tabName={'Repositories'} to="/" />
+      <AppBarTab tabName={'Sign In'} to="/login" />
     </View>
   );
 };
