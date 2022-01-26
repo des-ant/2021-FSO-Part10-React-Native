@@ -3,15 +3,20 @@ import { useField } from 'formik';
 
 import TextInput from './TextInput';
 import Text from './Text';
+import theme from '../theme';
 
 const styles = StyleSheet.create({
   errorText: {
-    marginTop: 5,
+    marginTop: -10,
+    marginBottom: 15,
+    color: theme.colors.error,
   },
 });
 
 const FormikTextInput = ({ name, ...props }) => {
   const [field, meta, helpers] = useField(name);
+
+  // Check if the field is touched and the error message is present
   const showError = meta.touched && meta.error;
 
   return (
@@ -23,6 +28,7 @@ const FormikTextInput = ({ name, ...props }) => {
         error={showError}
         {...props}
       />
+      {/* Show the error message if the value of showError variable is true  */}
       {showError && <Text style={styles.errorText}>{meta.error}</Text>}
     </>
   );

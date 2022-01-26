@@ -6,6 +6,7 @@ const theme = {
     light: 'white',
     bgGrey: '#e1e4e8',
     borderGrey: '#b0b3b5',
+    error: '#d73a4a',
   },
   fontSizes: {
     body: 14,
