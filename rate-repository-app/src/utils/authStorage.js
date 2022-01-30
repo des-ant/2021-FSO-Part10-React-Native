@@ -10,7 +10,7 @@ class AuthStorage {
       `${this.namespace}:accessToken`,
     );
 
-    return accessToken ? accessToken : "";
+    return accessToken ? accessToken : '';
   }
 
   async setAccessToken(accessToken) {
@@ -25,4 +25,4 @@ class AuthStorage {
   }
 }
 
-export const authStorageInstance = new AuthStorage('authStorageInstance');
+export default AuthStorage;
