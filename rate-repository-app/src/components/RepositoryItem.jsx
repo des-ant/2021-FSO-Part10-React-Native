@@ -1,3 +1,5 @@
+
+import { View } from 'react-native';
 import Card from './Card';
 
 export const shortenCount = (count) => {
@@ -10,7 +12,9 @@ export const shortenCount = (count) => {
 }
 
 const RepositoryItem = ({ item }) => (
-  <Card item={item} />
+  <View testID="repositoryItem">
+    <Card item={item} />
+  </View>
 );
 
 export default RepositoryItem;
