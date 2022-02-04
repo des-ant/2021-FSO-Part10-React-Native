@@ -4,7 +4,7 @@ import useRepository from '../hooks/useRepository';
 import Text from './Text';
 
 export const RepositoryContainer = ({ repository }) => {
-  return <RepositoryItem item={repository} />;
+  return <RepositoryItem item={repository} showLink />;
 };
 
 const RepositoryView = () => {

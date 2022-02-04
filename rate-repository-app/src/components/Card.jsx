@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Pressable } from 'react-native';
 import theme from '../theme';
 
 import Text from './Text';
@@ -71,6 +71,13 @@ const cardBodyStyles = StyleSheet.create({
     paddingHorizontal: 5,
     alignItems: 'center',
   },
+  button: {
+    backgroundColor: theme.colors.primary,
+    flex: 1,
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 4,
+  },
 });
 
 const CardBodyStat = ({ stat, value }) => {
@@ -109,6 +116,19 @@ const CardBody = ({ item }) => {
   );
 };
 
+const CardLink = ({ item }) => {
+  return (
+    <View style={cardBodyStyles.container}>
+      <Pressable onPress={() => console.log(item.url)} style={cardBodyStyles.button}>
+        <Text
+          fontWeight="bold"
+          color="light"
+        >Open in GitHub</Text>
+      </Pressable>
+    </View>
+  )
+}
+
 const cardStyles = StyleSheet.create({
   container: {
     alignItems: 'stretch',
@@ -117,11 +137,12 @@ const cardStyles = StyleSheet.create({
   },
 });
 
-const Card = ({ item }) => {
+const Card = ({ item, showLink }) => {
   return (
     <View style={cardStyles.container}>
       <CardHeader item={item} />
       <CardBody item={item} />
+      {showLink && <CardLink item={item} />}
     </View>
   );
 };

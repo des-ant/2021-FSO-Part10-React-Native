@@ -11,9 +11,9 @@ export const shortenCount = (count) => {
   return `${countNumber}`
 }
 
-const RepositoryItem = ({ item }) => (
+const RepositoryItem = ({ item, showLink }) => (
   <View testID="repositoryItem">
-    <Card item={item} />
+    <Card item={item} showLink={showLink} />
   </View>
 );
 

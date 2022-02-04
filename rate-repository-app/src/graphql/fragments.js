@@ -11,5 +11,6 @@ export const REPOSITORY_DETAILS = gql`
     forksCount
     reviewCount
     ratingAverage
+    url
   }
 `;
