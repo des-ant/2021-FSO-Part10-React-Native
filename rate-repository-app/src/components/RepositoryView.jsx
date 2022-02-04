@@ -15,6 +15,8 @@ const RepositoryView = () => {
     return <Text>Loading Repository...</Text>;
   }
 
+  console.log(repository.reviews);
+
   return <RepositoryContainer repository={repository} />;
 };
 
