@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Image, StyleSheet, Pressable } from 'react-native';
-import theme from '../theme';
+import * as Linking from 'expo-linking';
 
+import theme from '../theme';
 import Text from './Text';
 import { shortenCount } from './RepositoryItem';
 
@@ -117,9 +118,16 @@ const CardBody = ({ item }) => {
 };
 
 const CardLink = ({ item }) => {
+  const openLink = async (url) => {
+    const canOpenUrl =  await Linking.canOpenURL(url);
+    if (canOpenUrl) {
+      return await Linking.openURL(url);
+    }
+  }
+
   return (
     <View style={cardBodyStyles.container}>
-      <Pressable onPress={() => console.log(item.url)} style={cardBodyStyles.button}>
+      <Pressable onPress={() => openLink(item.url)} style={cardBodyStyles.button}>
         <Text
           fontWeight="bold"
           color="light"
