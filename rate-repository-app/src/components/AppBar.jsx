@@ -21,8 +21,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
 const AppBar = () => {
   const { me } = useMe();
   const [signOut] = useSignOut();
@@ -42,6 +40,7 @@ const AppBar = () => {
         contentContainerStyle={styles.scrollContainer}
       >
         <AppBarTab tabName={'Repositories'} to="/" />
+        <AppBarTab tabName={'Create a review'} to="/create-review" />
         { me === null 
         ? <AppBarTab tabName={'Sign In'} to="/login" />
         : <AppBarPressable tabName={'Sign Out'} onPress={logOut} />
