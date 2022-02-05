@@ -5,6 +5,7 @@ import * as Linking from 'expo-linking';
 import theme from '../theme';
 import Text from './Text';
 import { shortenCount } from './RepositoryItem';
+import { formatDate } from './ReviewItem';
 
 const cardHeaderStyles = StyleSheet.create({
   container: {
@@ -35,6 +36,16 @@ const cardHeaderStyles = StyleSheet.create({
   line: {
     marginBottom: 10,
   },
+  reviewRating: {
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderRadius: 50,
+    borderColor: theme.colors.primary,
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 const CardHeader = ({ item }) => {
@@ -54,6 +65,35 @@ const CardHeader = ({ item }) => {
         </View>
         <View style={cardHeaderStyles.languageTag}>
           <Text color="light">{item.language}</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const ReviewCardHeader = ({ item }) => {
+  return (
+    <View style={cardHeaderStyles.container}>
+      <View style={cardHeaderStyles.avatarContainer}>
+        <View style={cardHeaderStyles.reviewRating}>
+          <Text
+            fontWeight="bold"
+            fontSize="subheading"
+            color="primary"
+          >
+            {item.rating}
+          </Text>
+        </View>
+      </View>
+      <View style={cardHeaderStyles.infoContainer}>
+        <View style={cardHeaderStyles.line}>
+          <Text fontWeight="bold" fontSize="subheading">{item.user.username}</Text>
+        </View>
+        <View style={cardHeaderStyles.line}>
+          <Text color="textSecondary">{formatDate(item.createdAt)}</Text>
+        </View>
+        <View>
+          <Text>{item.text}</Text>
         </View>
       </View>
     </View>
@@ -154,5 +194,13 @@ const Card = ({ item, showLink }) => {
     </View>
   );
 };
+
+export const ReviewCard = ({ item }) => {
+  return (
+    <View style={cardStyles.container}>
+      <ReviewCardHeader item={item} />
+    </View>
+  );
+}
 
 export default Card;
