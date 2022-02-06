@@ -31,3 +31,16 @@ export const GET_REPOSITORY = gql`
   }
   ${REPOSITORY_DETAILS}
 `;
+
+export const GET_REPOSITORIES_ORDERED = gql`
+  query RepositoriesOrdered($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection) {
+    repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
+      edges {
+        node {
+          ...RepositoryDetails
+        }
+      }
+    }
+  }
+  ${REPOSITORY_DETAILS}
+`;

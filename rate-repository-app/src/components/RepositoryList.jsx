@@ -1,7 +1,7 @@
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import RepositoryItem from './RepositoryItem';
-import useRepositories from '../hooks/useRepositories';
+import useRepositoriesOrdered from '../hooks/useRepositoriesOrdered';
 
 const styles = StyleSheet.create({
   separator: {
@@ -39,7 +39,7 @@ export const RepositoryListContainer = ({ repositories }) => {
 };
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
+  const { repositories } = useRepositoriesOrdered("CREATED_AT", "DESC");
 
   return (
       <RepositoryListContainer repositories={repositories} />
