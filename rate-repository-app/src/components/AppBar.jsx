@@ -1,4 +1,5 @@
 import { View, StyleSheet, ScrollView } from 'react-native';
+import { useNavigate } from 'react-router-native';
 import Constants from 'expo-constants';
 import AppBarTab from './AppBarTab';
 import AppBarPressable from './AppBarPressable';
@@ -24,10 +25,12 @@ const styles = StyleSheet.create({
 const AppBar = () => {
   const { me } = useMe();
   const [signOut] = useSignOut();
+  const navigate = useNavigate();
 
   const logOut = async () => {
     try {
       await signOut();
+      navigate('/login');
     } catch (e) {
       console.log(e);
     }
