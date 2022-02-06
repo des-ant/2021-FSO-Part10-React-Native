@@ -47,6 +47,9 @@ const AppBar = () => {
         ? <AppBarTab tabName={'Sign In'} to="/login" />
         : <AppBarPressable tabName={'Sign Out'} onPress={logOut} />
         }
+        { me === null &&
+          <AppBarTab tabName={'Sign Up'} to="/sign-up" />
+        }
       </ScrollView>
     </View>
   );

@@ -8,6 +8,7 @@ import RepositoryView from './RepositoryView';
 import SignIn from './SignIn';
 import AppBar from './AppBar';
 import CreateReview from './CreateReview';
+import SignUp from './SignUp';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +29,7 @@ const Main = () => {
           <Route path=":id" element={<RepositoryView />} exact />
         </Route>
         <Route path="/login" element={<SignIn />} exact />
+        <Route path="/sign-up" element={<SignUp/>} exact />
         <Route path="/create-review" element={<CreateReview />} exact />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

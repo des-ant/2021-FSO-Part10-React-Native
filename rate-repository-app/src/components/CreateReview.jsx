@@ -1,25 +1,12 @@
-import { View, Pressable, StyleSheet } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
-import theme from '../theme';
 import useCreateReview from '../hooks/useCreateReview';
-
-const createReviewFormStyles = StyleSheet.create({
-  container: {
-    alignItems: 'stretch',
-    backgroundColor: theme.colors.light,
-    padding: 15,
-  },
-  button: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: 4,
-    padding: 15,
-  },
-});
+import { formStyles } from '../theme';
 
 const initialValues = {
   ownerName: '',
@@ -47,7 +34,7 @@ const validationSchema = yup.object().shape({
 
 const CreateReviewForm = ({ onSubmit }) => {
   return (
-    <View style={createReviewFormStyles.container}>
+    <View style={formStyles.container}>
       <FormikTextInput
         name="ownerName"
         placeholder="Repository owner name"
@@ -67,7 +54,7 @@ const CreateReviewForm = ({ onSubmit }) => {
         multiline
         numberOfLines={6}
       />
-      <Pressable onPress={onSubmit} style={createReviewFormStyles.button} testID="submitButton">
+      <Pressable onPress={onSubmit} style={formStyles.button} testID="submitButton">
         <Text
           color="light"
           fontWeight="bold"
