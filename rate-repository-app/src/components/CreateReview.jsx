@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
 import theme from '../theme';
-import useSignIn from '../hooks/useSignin';
+import useCreateReview from '../hooks/useCreateReview';
 
 const createReviewFormStyles = StyleSheet.create({
   container: {
@@ -22,14 +22,14 @@ const createReviewFormStyles = StyleSheet.create({
 });
 
 const initialValues = {
-  repositoryOwner: '',
+  ownerName: '',
   repositoryName: '',
   rating: '',
-  review: '',
+  text: '',
 };
 
 const validationSchema = yup.object().shape({
-  repositoryOwner: yup
+  ownerName: yup
     .string()
     .required('Repository owner name is required'),
   repositoryName: yup
@@ -41,7 +41,7 @@ const validationSchema = yup.object().shape({
     .min(0, 'Minimum rating is 0')
     .max(100, 'Maximum rating is 100')
     .required('Rating is required'),
-  review: yup
+  text: yup
     .string(),
 });
 
@@ -49,7 +49,7 @@ const CreateReviewForm = ({ onSubmit }) => {
   return (
     <View style={createReviewFormStyles.container}>
       <FormikTextInput
-        name="repositoryOwner"
+        name="ownerName"
         placeholder="Repository owner name"
       />
       <FormikTextInput
@@ -59,9 +59,10 @@ const CreateReviewForm = ({ onSubmit }) => {
       <FormikTextInput
         name="rating"
         placeholder="Rating between 0 and 100"
+        keyboardType = "numeric"
       />
       <FormikTextInput
-        name="review"
+        name="text"
         placeholder="Review"
         multiline
         numberOfLines={6}
@@ -91,24 +92,26 @@ export const CreateReviewContainer = ({ onSubmit }) => {
 };
 
 const CreateReview = () => {
-  const [signIn] = useSignIn();
+  const [createReview] = useCreateReview();
   const navigate = useNavigate();
 
   const onSubmit = async (values) => {
     const {
-      repositoryOwner,
+      ownerName,
       repositoryName,
       rating,
-      review
+      text
     } = values;
 
     try {
-      await signIn({
-        repositoryOwner,
+      console.log(rating);
+      const createdReview = await createReview({
+        ownerName,
         repositoryName,
         rating,
-        review
+        text
       });
+      console.log(createdReview);
       navigate('/create-review');
     } catch (e) {
       console.log(e);

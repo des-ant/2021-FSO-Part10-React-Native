@@ -40,7 +40,9 @@ const AppBar = () => {
         contentContainerStyle={styles.scrollContainer}
       >
         <AppBarTab tabName={'Repositories'} to="/" />
-        <AppBarTab tabName={'Create a review'} to="/create-review" />
+        { me &&
+          <AppBarTab tabName={'Create a review'} to="/create-review" />
+        }
         { me === null 
         ? <AppBarTab tabName={'Sign In'} to="/login" />
         : <AppBarPressable tabName={'Sign Out'} onPress={logOut} />
