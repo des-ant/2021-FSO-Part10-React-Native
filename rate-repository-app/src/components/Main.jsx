@@ -24,7 +24,7 @@ const Main = () => {
       <AppBar />
       <Routes>
         <Route path="/" element={<RepositoryList />} exact />
-        <Route path="repository">
+        <Route path="/repository">
           <Route path=":id" element={<RepositoryView />} exact />
         </Route>
         <Route path="/login" element={<SignIn />} exact />

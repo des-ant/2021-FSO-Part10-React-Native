@@ -15,7 +15,7 @@ export const RepositoryListContainer = ({ repositories }) => {
   const navigate = useNavigate();
 
   const handlePress = (id) => {
-    navigate(`repository/${id}`);
+    navigate(`/repository/${id}`);
   };
 
   const renderItem = ({ item }) => (
