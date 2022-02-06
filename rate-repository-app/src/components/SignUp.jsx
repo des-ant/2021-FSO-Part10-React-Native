@@ -6,20 +6,30 @@ import * as yup from 'yup';
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
 import useCreateUser from '../hooks/useCreateUser';
+import useSignIn from '../hooks/useSignin';
 import { formStyles } from '../theme';
 
 const initialValues = {
   username: '',
   password: '',
+  passwordConfirmation: '',
 };
 
 const validationSchema = yup.object().shape({
   username: yup
     .string()
-    .required('Username is required'),
+    .required('Username is required')
+    .min(1, 'Username must be between 1 and 30 characters')
+    .max(30, 'Username must be between 1 and 30 characters'),
   password: yup
     .string()
-    .required('Password is required'),
+    .required('Password is required')
+    .min(5, 'Password must be between 5 and 50 characters')
+    .max(50, 'Password must be between 5 and 50 characters'),
+  passwordConfirmation: yup
+    .string()
+    .required('Password confirmation is required')
+    .oneOf([yup.ref('password'), null], 'Passwords do not match'),
 });
 
 const SignUpForm = ({ onSubmit }) => {
@@ -32,6 +42,11 @@ const SignUpForm = ({ onSubmit }) => {
       <FormikTextInput
         name="password"
         placeholder="Password"
+        secureTextEntry
+      />
+      <FormikTextInput
+        name="passwordConfirmation"
+        placeholder="Password confirmation"
         secureTextEntry
       />
       <Pressable onPress={onSubmit} style={formStyles.button} testID="submitButton">
@@ -60,6 +75,7 @@ export const SignUpContainer = ({ onSubmit }) => {
 
 const SignUp = () => {
   const [createUser] = useCreateUser();
+  const [signIn] = useSignIn();
   const navigate = useNavigate();
 
   const onSubmit = async (values) => {
@@ -67,6 +83,7 @@ const SignUp = () => {
 
     try {
       await createUser({ username, password });
+      await signIn({ username, password });
       navigate('/');
     } catch (e) {
       console.log(e);
