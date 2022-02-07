@@ -1,11 +1,19 @@
+import { useState } from 'react';
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
+import { Picker } from '@react-native-picker/picker';
 import RepositoryItem from './RepositoryItem';
 import useRepositoriesOrdered from '../hooks/useRepositoriesOrdered';
+import theme from '../theme';
 
 const styles = StyleSheet.create({
   separator: {
     height: 10,
+  },
+  picker: {
+    padding: 10,
+    fontFamily: theme.fonts.main,
+    fontSize: theme.fontSizes.subheading,
   },
 });
 
@@ -39,10 +47,51 @@ export const RepositoryListContainer = ({ repositories }) => {
 };
 
 const RepositoryList = () => {
-  const { repositories } = useRepositoriesOrdered("CREATED_AT", "DESC");
+  const [selectedOrder, setSelectedOrder]
+    = useState({
+      orderBy: "CREATED_AT",
+      orderDirection: "DESC",
+    });
+  const { repositories } = useRepositoriesOrdered(selectedOrder);
 
   return (
-      <RepositoryListContainer repositories={repositories} />
+      <View>
+        <Picker
+          selectedValue={JSON.stringify(selectedOrder)}
+          onValueChange={(itemValue) =>
+            setSelectedOrder(JSON.parse(itemValue))
+          }
+          style={styles.picker}
+        >
+          <Picker.Item
+            label="Select an item..."
+            value={null}
+            enabled={false}
+          />
+          <Picker.Item
+            label="Latest repositories"
+            value={JSON.stringify({
+              orderBy: "CREATED_AT",
+              orderDirection: "DESC",
+            })}
+          />
+          <Picker.Item
+            label="Highest rated repositories"
+            value={JSON.stringify({
+              orderBy: "RATING_AVERAGE",
+              orderDirection: "DESC",
+            })}
+          />
+          <Picker.Item
+            label="Lowest rated repositories"
+            value={JSON.stringify({
+              orderBy: "RATING_AVERAGE",
+              orderDirection: "ASC",
+            })}
+          />
+        </Picker>
+        <RepositoryListContainer repositories={repositories} />
+      </View>
   );
 };
 
