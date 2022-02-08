@@ -3,7 +3,7 @@ import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import { Picker } from '@react-native-picker/picker';
 import RepositoryItem from './RepositoryItem';
-import useRepositoriesOrdered from '../hooks/useRepositoriesOrdered';
+import useRepositories from '../hooks/useRepositories';
 import theme from '../theme';
 
 const styles = StyleSheet.create({
@@ -47,19 +47,20 @@ export const RepositoryListContainer = ({ repositories }) => {
 };
 
 const RepositoryList = () => {
-  const [selectedOrder, setSelectedOrder]
+  const [filter, setFilter]
     = useState({
       orderBy: "CREATED_AT",
       orderDirection: "DESC",
+      searchKeyword: "",
     });
-  const { repositories } = useRepositoriesOrdered(selectedOrder);
+  const { repositories } = useRepositories(filter);
 
   return (
       <View>
         <Picker
-          selectedValue={JSON.stringify(selectedOrder)}
+          selectedValue={JSON.stringify(filter)}
           onValueChange={(itemValue) =>
-            setSelectedOrder(JSON.parse(itemValue))
+            setFilter(JSON.parse(itemValue))
           }
           style={styles.picker}
         >
@@ -71,6 +72,7 @@ const RepositoryList = () => {
           <Picker.Item
             label="Latest repositories"
             value={JSON.stringify({
+              ...filter,
               orderBy: "CREATED_AT",
               orderDirection: "DESC",
             })}
@@ -78,6 +80,7 @@ const RepositoryList = () => {
           <Picker.Item
             label="Highest rated repositories"
             value={JSON.stringify({
+              ...filter,
               orderBy: "RATING_AVERAGE",
               orderDirection: "DESC",
             })}
@@ -85,6 +88,7 @@ const RepositoryList = () => {
           <Picker.Item
             label="Lowest rated repositories"
             value={JSON.stringify({
+              ...filter,
               orderBy: "RATING_AVERAGE",
               orderDirection: "ASC",
             })}
