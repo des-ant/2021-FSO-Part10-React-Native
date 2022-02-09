@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import { Picker } from '@react-native-picker/picker';
+import { Searchbar } from 'react-native-paper';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import theme from '../theme';
@@ -53,10 +54,16 @@ const RepositoryList = () => {
       orderDirection: "DESC",
       searchKeyword: "",
     });
+  const onChangeSearch = searchKeyword => setFilter({...filter, searchKeyword});
   const { repositories } = useRepositories(filter);
 
   return (
       <View>
+        <Searchbar
+          placeholder="Search repositories"
+          onChangeText={onChangeSearch}
+          value={filter.searchKeyword}
+        />
         <Picker
           selectedValue={JSON.stringify(filter)}
           onValueChange={(itemValue) =>
