@@ -3,6 +3,7 @@ import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import { Picker } from '@react-native-picker/picker';
 import { Searchbar } from 'react-native-paper';
+import { useDebouncedCallback } from 'use-debounce';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import theme from '../theme';
@@ -48,21 +49,37 @@ export const RepositoryListContainer = ({ repositories }) => {
 };
 
 const RepositoryList = () => {
+  const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter]
     = useState({
       orderBy: "CREATED_AT",
       orderDirection: "DESC",
       searchKeyword: "",
     });
-  const onChangeSearch = searchKeyword => setFilter({...filter, searchKeyword});
   const { repositories } = useRepositories(filter);
+  // Debounce callback
+  const debounced = useDebouncedCallback(
+    // Update filter state when debounced is called
+    (searchKeyword) => {
+      setFilter({...filter, searchKeyword});
+    },
+    // Execute the above function after the delay
+    // Delay in ms
+    500
+  );
+
+  const onChangeSearch = query => {
+    setSearchQuery(query);
+    debounced(query);
+  };
 
   return (
       <View>
+        {console.log(filter)}
         <Searchbar
           placeholder="Search repositories"
           onChangeText={onChangeSearch}
-          value={filter.searchKeyword}
+          value={searchQuery}
         />
         <Picker
           selectedValue={JSON.stringify(filter)}
