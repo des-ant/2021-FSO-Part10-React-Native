@@ -14,7 +14,10 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer  = ({ repositories }) => {
+export const RepositoryListContainer  = ({
+  repositories,
+  onEndReach
+}) => {
   const navigate = useNavigate();
 
   const handlePress = (id) => {
@@ -37,6 +40,8 @@ export const RepositoryListContainer  = ({ repositories }) => {
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
       keyExtractor={item => item.id}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };
@@ -50,13 +55,20 @@ const RepositoryList = () => {
     });
   const { repositories } = useRepositories(filter);
 
+  const onEndReach = () => {
+    console.log('You have reached the end of the list');
+  };
+
   return (
       <View>
         <RepositoryListHeader
           filter={filter}
           setFilter={setFilter}
         />
-        <RepositoryListContainer repositories={repositories} />
+        <RepositoryListContainer
+          repositories={repositories}
+          onEndReach={onEndReach}
+        />
       </View>
   );
 };
