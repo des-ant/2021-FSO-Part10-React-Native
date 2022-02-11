@@ -35,3 +35,12 @@ export const REPOSITORY_DETAILS = gql`
   }
   ${REVIEW_DETAILS}
 `;
+
+export const PAGEINFO_DETAILS = gql`
+  fragment PageInfoDetails on PageInfo {
+    hasPreviousPage
+    hasNextPage
+    startCursor
+    endCursor
+  }
+`;

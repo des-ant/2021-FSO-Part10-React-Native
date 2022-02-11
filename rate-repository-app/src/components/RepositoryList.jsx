@@ -53,10 +53,13 @@ const RepositoryList = () => {
       orderDirection: "DESC",
       searchKeyword: "",
     });
-  const { repositories } = useRepositories(filter);
+  const { repositories, fetchMore } = useRepositories({
+    ...filter,
+    first: 8,
+  });
 
   const onEndReach = () => {
-    console.log('You have reached the end of the list');
+    fetchMore();
   };
 
   return (
