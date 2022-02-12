@@ -1,14 +1,25 @@
 import { gql } from '@apollo/client';
 
 const REVIEW_DETAILS = gql`
-  fragment ReviewDetails on Review {
-    id
-    text
-    rating
-    createdAt
-    user {
-      id
-      username
+  fragment ReviewDetails on ReviewConnection {
+    totalCount
+    edges {
+      node {
+        id
+        text
+        rating
+        createdAt
+        user {
+          id
+          username
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      startCursor
+      hasNextPage
     }
   }
 `;
@@ -25,15 +36,7 @@ export const REPOSITORY_DETAILS = gql`
     reviewCount
     ratingAverage
     url
-    reviews {
-      edges {
-        node {
-          ...ReviewDetails
-        }
-      }
-    }
   }
-  ${REVIEW_DETAILS}
 `;
 
 export const PAGEINFO_DETAILS = gql`
@@ -43,4 +46,15 @@ export const PAGEINFO_DETAILS = gql`
     startCursor
     endCursor
   }
+`;
+
+export const REPOSITORY_VIEW_DETAILS = gql`
+  fragment RepositoryViewDetails on Repository {
+    ...RepositoryDetails
+    reviews(first: $first, after: $after) {
+      ...ReviewDetails
+    }
+  }
+  ${REPOSITORY_DETAILS}
+  ${REVIEW_DETAILS}
 `;
