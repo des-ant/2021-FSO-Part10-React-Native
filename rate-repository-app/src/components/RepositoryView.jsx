@@ -26,7 +26,10 @@ export const ReviewContainer = ({ review }) => {
 
 const RepositoryView = () => {
   const { id } = useParams();
-  const { repository } = useRepository({ id });
+  const { repository, fetchMore } = useRepository({
+    id,
+    first: 8,
+  });
 
   if (!repository) {
     return <Text>Loading Repository...</Text>;
@@ -36,6 +39,11 @@ const RepositoryView = () => {
   ? repository.reviews.edges.map((edge) => edge.node)
   : [];
 
+  const onEndReach = () => {
+    console.log('You have reached the end of the list');
+    fetchMore();
+  };
+
   return (
     <FlatList
       data={reviewNodes}
@@ -44,6 +52,8 @@ const RepositoryView = () => {
       ListHeaderComponent={() => <RepositoryContainer repository={repository} />}
       ItemSeparatorComponent={ItemSeparator}
       ListHeaderComponentStyle={styles.listHeaderStyle}
+      onEndReach={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   )
 };
