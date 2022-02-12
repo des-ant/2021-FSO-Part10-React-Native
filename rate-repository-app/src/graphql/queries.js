@@ -35,8 +35,8 @@ export const GET_REPOSITORIES = gql`
   ${PAGEINFO_DETAILS}
 `;
 
-export const ME = gql`
-  query Me {
+export const GET_CURRENT_USER = gql`
+  query GetCurrentUser {
     me {
       id
       username

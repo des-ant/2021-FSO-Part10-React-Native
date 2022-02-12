@@ -4,7 +4,7 @@ import Constants from 'expo-constants';
 import AppBarTab from './AppBarTab';
 import AppBarPressable from './AppBarPressable';
 import theme from '../theme';
-import useMe from '../hooks/useMe';
+import useGetCurrentUser from '../hooks/useGetCurrentUser';
 import useSignOut from '../hooks/useSignOut';
 
 const styles = StyleSheet.create({
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { me } = useMe();
+  const { me } = useGetCurrentUser();
   const [signOut] = useSignOut();
   const navigate = useNavigate();
 
@@ -45,6 +45,9 @@ const AppBar = () => {
         <AppBarTab tabName={'Repositories'} to="/" />
         { me &&
           <AppBarTab tabName={'Create a review'} to="/create-review" />
+        }
+        { me &&
+          <AppBarTab tabName={'My reviews'} to="/create-review" />
         }
         { me === null 
         ? <AppBarTab tabName={'Sign In'} to="/login" />
