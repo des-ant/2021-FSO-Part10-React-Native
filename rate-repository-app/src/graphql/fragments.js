@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const REVIEW_DETAILS = gql`
+export const REVIEW_DETAILS = gql`
   fragment ReviewDetails on ReviewConnection {
     totalCount
     edges {
@@ -12,6 +12,9 @@ const REVIEW_DETAILS = gql`
         user {
           id
           username
+        }
+        repository {
+          fullName
         }
       }
       cursor

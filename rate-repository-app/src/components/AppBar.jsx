@@ -47,9 +47,9 @@ const AppBar = () => {
           <AppBarTab tabName={'Create a review'} to="/create-review" />
         }
         { me &&
-          <AppBarTab tabName={'My reviews'} to="/create-review" />
+          <AppBarTab tabName={'My reviews'} to="/my-reviews" />
         }
-        { me === null 
+        { me === null
         ? <AppBarTab tabName={'Sign In'} to="/login" />
         : <AppBarPressable tabName={'Sign Out'} onPress={logOut} />
         }

@@ -1,7 +1,7 @@
 
 import { View } from 'react-native';
 
-import { ReviewCard } from './Card';
+import { ReviewCard, MyReviewCard } from './Card';
 
 export const formatDate = (date) => {
   const dateObject = new Date(date);
@@ -12,6 +12,12 @@ export const formatDate = (date) => {
 const ReviewItem = ({ item }) => (
   <View testID="repositoryItem">
     <ReviewCard item={item} />
+  </View>
+);
+
+export const MyReviewItem = ({ item }) => (
+  <View testID="repositoryItem">
+    <MyReviewCard item={item} />
   </View>
 );
 

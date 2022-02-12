@@ -71,7 +71,7 @@ const CardHeader = ({ item }) => {
   );
 };
 
-const ReviewCardHeader = ({ item }) => {
+const ReviewCardHeader = ({ item, title }) => {
   return (
     <View style={cardHeaderStyles.container}>
       <View style={cardHeaderStyles.avatarContainer}>
@@ -87,7 +87,7 @@ const ReviewCardHeader = ({ item }) => {
       </View>
       <View style={cardHeaderStyles.infoContainer}>
         <View style={cardHeaderStyles.line}>
-          <Text fontWeight="bold" fontSize="subheading">{item.user.username}</Text>
+          <Text fontWeight="bold" fontSize="subheading">{title}</Text>
         </View>
         <View style={cardHeaderStyles.line}>
           <Text color="textSecondary">{formatDate(item.createdAt)}</Text>
@@ -198,7 +198,21 @@ const Card = ({ item, showLink }) => {
 export const ReviewCard = ({ item }) => {
   return (
     <View style={cardStyles.container}>
-      <ReviewCardHeader item={item} />
+      <ReviewCardHeader
+        item={item}
+        title={item.user.username}
+      />
+    </View>
+  );
+}
+
+export const MyReviewCard = ({ item }) => {
+  return (
+    <View style={cardStyles.container}>
+      <ReviewCardHeader
+        item={item}
+        title={item.repository.fullName}
+      />
     </View>
   );
 }

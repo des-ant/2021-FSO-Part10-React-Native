@@ -3,6 +3,7 @@ import {
   REPOSITORY_DETAILS,
   PAGEINFO_DETAILS,
   REPOSITORY_VIEW_DETAILS,
+  REVIEW_DETAILS,
 } from './fragments';
 
 export const GET_REPOSITORIES = gql`
@@ -36,12 +37,16 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_CURRENT_USER = gql`
-  query GetCurrentUser {
+  query getCurrentUser($includeReviews: Boolean = false) {
     me {
       id
       username
+      reviews @include(if: $includeReviews) {
+        ...ReviewDetails
+      }
     }
   }
+  ${REVIEW_DETAILS}
 `;
 
 export const GET_REPOSITORY = gql`
