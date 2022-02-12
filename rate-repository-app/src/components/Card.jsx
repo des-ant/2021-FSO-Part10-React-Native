@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet, Pressable } from 'react-native';
 import * as Linking from 'expo-linking';
+import { useNavigate } from 'react-router-native';
 
 import theme from '../theme';
 import Text from './Text';
@@ -192,10 +193,11 @@ const CardLink = ({ item }) => {
   )
 }
 
-// eslint-disable-next-line no-unused-vars
 const MyReviewCardLink = ({ item }) => {
+  const navigate = useNavigate();
+
   const viewRepository = (item) => {
-    console.log(item);
+    navigate(`/repository/${item.repository.id}`);
   }
 
   const deleteReview = (item) => {
