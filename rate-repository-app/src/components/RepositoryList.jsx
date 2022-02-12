@@ -16,7 +16,9 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 export const RepositoryListContainer  = ({
   repositories,
-  onEndReach
+  onEndReach,
+  filter,
+  setFilter,
 }) => {
   const navigate = useNavigate();
 
@@ -34,12 +36,20 @@ export const RepositoryListContainer  = ({
     ? repositories.edges.map((edge) => edge.node)
     : [];
 
+  const renderListHeader = () => (
+    <RepositoryListHeader
+      filter={filter}
+      setFilter={setFilter}
+    />
+  );
+
   return (
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
       keyExtractor={item => item.id}
+      ListHeaderComponent={renderListHeader}
       onEndReached={onEndReach}
       onEndReachedThreshold={0.5}
     />
@@ -63,16 +73,12 @@ const RepositoryList = () => {
   };
 
   return (
-      <View>
-        <RepositoryListHeader
-          filter={filter}
-          setFilter={setFilter}
-        />
-        <RepositoryListContainer
-          repositories={repositories}
-          onEndReach={onEndReach}
-        />
-      </View>
+    <RepositoryListContainer
+      repositories={repositories}
+      onEndReach={onEndReach}
+      filter={filter}
+      setFilter={setFilter}
+    />
   );
 };
 

@@ -26,7 +26,7 @@ export const ReviewContainer = ({ review }) => {
 
 const RepositoryView = () => {
   const { id } = useParams();
-  const { repository } = useRepository(id);
+  const { repository } = useRepository({ id });
 
   if (!repository) {
     return <Text>Loading Repository...</Text>;

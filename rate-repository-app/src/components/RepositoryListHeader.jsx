@@ -28,6 +28,10 @@ const RepositoryListHeader = ({ filter, setFilter }) => {
     500
   );
 
+  const onChangePicker = itemValue => {
+    setFilter(JSON.parse(itemValue));
+  };
+
   const onChangeSearch = query => {
     setSearchQuery(query);
     debounced(query);
@@ -42,9 +46,7 @@ const RepositoryListHeader = ({ filter, setFilter }) => {
       />
       <Picker
         selectedValue={JSON.stringify(filter)}
-        onValueChange={(itemValue) =>
-          setFilter(JSON.parse(itemValue))
-        }
+        onValueChange={onChangePicker}
         style={styles.picker}
       >
         <Picker.Item
