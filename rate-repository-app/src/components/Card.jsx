@@ -118,6 +118,21 @@ const cardBodyStyles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     borderRadius: 4,
+    marginHorizontal: 10,
+  },
+  buttonError: {
+    backgroundColor: theme.colors.error,
+    flex: 1,
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 4,
+    marginHorizontal: 10,
+  },
+  buttonContainer: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    paddingTop: 15,
+    justifyContent: 'space-between',
   },
 });
 
@@ -177,6 +192,34 @@ const CardLink = ({ item }) => {
   )
 }
 
+// eslint-disable-next-line no-unused-vars
+const MyReviewCardLink = ({ item }) => {
+  const viewRepository = (item) => {
+    console.log(item);
+  }
+
+  const deleteReview = (item) => {
+    console.log(item);
+  }
+
+  return (
+    <View style={cardBodyStyles.buttonContainer}>
+      <Pressable onPress={() => viewRepository(item)} style={cardBodyStyles.button}>
+        <Text
+          fontWeight="bold"
+          color="light"
+        >View repository</Text>
+      </Pressable>
+      <Pressable onPress={() => deleteReview(item)} style={cardBodyStyles.buttonError}>
+        <Text
+          fontWeight="bold"
+          color="light"
+        >Delete review</Text>
+      </Pressable>
+    </View>
+  )
+}
+
 const cardStyles = StyleSheet.create({
   container: {
     alignItems: 'stretch',
@@ -213,6 +256,7 @@ export const MyReviewCard = ({ item }) => {
         item={item}
         title={item.repository.fullName}
       />
+      <MyReviewCardLink item={item} />
     </View>
   );
 }
