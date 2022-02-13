@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet, Pressable } from 'react-native';
+import { View, Image, StyleSheet, Pressable, Alert } from 'react-native';
 import * as Linking from 'expo-linking';
 import { useNavigate } from 'react-router-native';
 
@@ -7,6 +7,7 @@ import theme from '../theme';
 import Text from './Text';
 import { shortenCount } from './RepositoryItem';
 import { formatDate } from './ReviewItem';
+import useDeleteReview from '../hooks/useDeleteReview';
 
 const cardHeaderStyles = StyleSheet.create({
   container: {
@@ -193,16 +194,36 @@ const CardLink = ({ item }) => {
   )
 }
 
-const MyReviewCardLink = ({ item }) => {
+const MyReviewCardLink = ({ item, refetch }) => {
   const navigate = useNavigate();
+  const [deleteReview] = useDeleteReview();
 
   const viewRepository = (item) => {
     navigate(`/repository/${item.repository.id}`);
   }
 
-  const deleteReview = (item) => {
-    console.log(item);
+  const handleDeleteReview = async (item) => {
+    try {
+      await deleteReview({ deleteReviewId: item.id });
+      refetch();
+    } catch (e) {
+      console.log(e);
+    }
   }
+
+  const createDeleteAlert = (item) =>
+    Alert.alert(
+      "Delete Review",
+      "Are you sure you want to delete this review?",
+      [
+        {
+          text: "CANCEL",
+          onPress: () => handleDeleteReview(item),
+          style: "cancel"
+        },
+        { text: "DELETE", onPress: () => console.log("OK Pressed") }
+      ]
+    );
 
   return (
     <View style={cardBodyStyles.buttonContainer}>
@@ -212,7 +233,7 @@ const MyReviewCardLink = ({ item }) => {
           color="light"
         >View repository</Text>
       </Pressable>
-      <Pressable onPress={() => deleteReview(item)} style={cardBodyStyles.buttonError}>
+      <Pressable onPress={() => createDeleteAlert(item)} style={cardBodyStyles.buttonError}>
         <Text
           fontWeight="bold"
           color="light"
@@ -251,14 +272,14 @@ export const ReviewCard = ({ item }) => {
   );
 }
 
-export const MyReviewCard = ({ item }) => {
+export const MyReviewCard = ({ item, refetch }) => {
   return (
     <View style={cardStyles.container}>
       <ReviewCardHeader
         item={item}
         title={item.repository.fullName}
       />
-      <MyReviewCardLink item={item} />
+      <MyReviewCardLink item={item} refetch={refetch} />
     </View>
   );
 }

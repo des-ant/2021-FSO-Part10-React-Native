@@ -15,9 +15,9 @@ const ReviewItem = ({ item }) => (
   </View>
 );
 
-export const MyReviewItem = ({ item }) => (
+export const MyReviewItem = ({ item, refetch }) => (
   <View testID="repositoryItem">
-    <MyReviewCard item={item} />
+    <MyReviewCard item={item} refetch={refetch} />
   </View>
 );
 
